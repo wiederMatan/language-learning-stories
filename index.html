@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Learning Stories</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Learn Languages with Stories</h1>
+    <div class="container">
+        <div class="main-content">
+            <div id="current-story" class="story-container">
+                <h2>Current Story</h2>
+                <select id="language-select">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                </select>
+                <p id="story-text"></p>
+            </div>
+            <div class="button-group">
+                <button id="generate-btn">Generate Next Story</button>
+                <button id="clear-btn">Clear Selections</button>
+                <button id="reset-btn">Reset Progress</button>
+                <button id="save-btn">Save Customized Story</button>
+                <button id="export-btn">Export Stories</button>
+                <button id="grammar-btn">Show Grammar Insights</button>
+                <button id="dark-mode-btn">Toggle Dark Mode</button>
+                <button id="audio-btn">Play Audio</button>
+            </div>
+            <textarea id="custom-story" placeholder="Edit the current story here (optional)..."></textarea>
+            <div id="grammar-insights"></div>
+            <div id="progress">Stories Completed: 0 | Words Learned: 0</div>
+        </div>
+        <div class="sidebar" id="saved-stories">
+            <h2>Saved Stories</h2>
+            <div id="saved-text"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
