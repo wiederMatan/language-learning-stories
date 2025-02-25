@@ -1,7 +1,7 @@
 // Multi-language stories
 const stories = {
-    en: "The old sailor gazed at the vast ocean under a crimson sky. Waves crashed loudly against his sturdy wooden boat. He clutched a tattered map hoping to find hidden treasure. A curious seagull soared above watching the scene unfold. The wind whispered secrets of ancient voyages long forgotten. Clouds gathered slowly on the distant horizon. The sailor felt a spark of excitement deep within. His journey was perilous but full of promise. Night fell and stars lit up the endless sea. Tomorrow held the key to his wildest dreams.",
-    es: "El viejo marinero miró el vasto océano bajo un cielo carmesí. Las olas chocaron ruidosamente contra su robusto barco de madera. Sostuvo un mapa desgarrado esperando encontrar un tesoro escondido. Una gaviota curiosa voló arriba observando la escena. El viento susurró secretos de antiguos viajes olvidados. Las nubes se reunieron lentamente en el horizonte lejano. El marinero sintió una chispa de emoción en su interior. Su viaje era peligroso pero lleno de promesas. La noche cayó y las estrellas iluminaron el mar sin fin. Mañana tenía la clave de sus sueños más salvajes."
+    en: "A lone explorer trekked across a golden desert under a blazing sun. Sand swirled fiercely around her weathered cloak. She gripped a faded journal promising clues to a lost city. A distant hawk cried out, piercing the stillness. The air shimmered with heat and untold mysteries. Dunes stretched endlessly toward a faint mirage. Her heart pounded with anticipation and resolve. The journey was grueling yet whispered of glory. Twilight descended, painting the sky in fiery hues. Destiny awaited beyond the next rise.",
+    es: "Una exploradora solitaria caminó por un desierto dorado bajo un sol ardiente. La arena giraba ferozmente alrededor de su capa desgastada. Aferraba un diario desvaído que prometía pistas de una ciudad perdida. Un halcón lejano gritó, rompiendo el silencio. El aire brillaba con calor y misterios sin contar. Las dunas se extendían infinitamente hacia un leve espejismo. Su corazón latía con ansiedad y determinación. El viaje era agotador pero susurraba gloria. El crepúsculo cayó, tiñendo el cielo de tonos ardientes. El destino aguardaba más allá del próximo ascenso."
 };
 
 let currentStory = stories.en;
@@ -48,7 +48,7 @@ function displayCurrentStory() {
         const isSelected = selectedWords.includes(cleanWord);
         return `<span class="word ${isKnown ? '' : 'unknown'} ${isSelected ? 'selected' : ''}" onclick="toggleWord('${word}')">${word}</span>`;
     }).join(' ');
-    document.getElementById('custom-story').value = currentStory; // Sync textarea
+    document.getElementById('custom-story').value = currentStory;
 }
 
 // Toggle word selection
@@ -80,7 +80,7 @@ function generateNextStory() {
         newStoryLines.push(template.replace("{word1}", word1).replace("{word2}", word2));
     }
     const newStory = newStoryLines.join(" ");
-    savedStories.unshift(currentStory); // Save the current story before updating
+    savedStories.unshift(currentStory);
     currentStory = newStory;
     selectedWords = [];
     localStorage.setItem('savedStories', JSON.stringify(savedStories));
@@ -89,13 +89,13 @@ function generateNextStory() {
     updateProgress();
 }
 
-// Save customized story (optional override)
+// Save customized story
 function saveCustomStory() {
     const customStory = document.getElementById('custom-story').value.trim();
     if (customStory && customStory !== currentStory) {
         currentStory = customStory;
-        if (savedStories.length > 0) savedStories[0] = customStory; // Update most recent
-        else savedStories.unshift(customStory); // Add if no stories yet
+        if (savedStories.length > 0) savedStories[0] = customStory;
+        else savedStories.unshift(customStory);
         localStorage.setItem('savedStories', JSON.stringify(savedStories));
         displayCurrentStory();
         displaySavedStories();
@@ -169,10 +169,14 @@ function playAudio() {
     speechSynthesis.speak(utterance);
 }
 
-// Gamification: Update progress
+// Update progress
 function updateProgress() {
     const progress = document.getElementById('progress');
+    const progressFill = document.querySelector('.progress-fill');
+    const totalMilestone = 10;
+    const progressPercentage = Math.min((savedStories.length / totalMilestone) * 100, 100);
     progress.textContent = `Stories Completed: ${savedStories.length} | Words Learned: ${knownWords.length}`;
+    progressFill.style.width = `${progressPercentage}%`;
     if (savedStories.length === 5) alert("Milestone: 5 stories completed!");
 }
 
